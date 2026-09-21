@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "AI Coding Assistant"
+description = "A professional AI coding workspace that helps developers write, explain, debug, and improve code with a focused chat experience and copy-ready code output."
+version = "1.0.0"
+id = "artifacts/ai-coding-assistant"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20417
+
+[services.development]
+run = "pnpm --filter @workspace/ai-coding-assistant run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/ai-coding-assistant", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/ai-coding-assistant/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20417"
+BASE_PATH = "/"

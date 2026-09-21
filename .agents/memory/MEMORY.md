@@ -1,0 +1,1 @@
+- [Generated fetch client compatibility](generated-fetch-client.md) — keep `dom.iterable` enabled for generated `Headers.entries()` typing.
