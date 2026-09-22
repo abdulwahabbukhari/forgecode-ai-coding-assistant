@@ -12,6 +12,12 @@ const sendButton = $('#send-button');
 const messagesEl = $('#messages');
 const welcomeState = $('#welcome-state');
 const toast = $('#toast');
+const configuredApiUrl = typeof window.FORGE_CODE_API_URL === 'string'
+  ? window.FORGE_CODE_API_URL.trim()
+  : '';
+const apiEndpoint = configuredApiUrl && !configuredApiUrl.includes('PASTE_REPLIT_API_URL_HERE')
+  ? configuredApiUrl
+  : 'api/chat.php';
 
 function escapeHtml(value) {
   return value.replace(/[&<>"']/g, (char) => ({
@@ -90,7 +96,7 @@ async function sendMessage() {
   setBusy(true);
 
   try {
-    const response = await fetch('api/chat.php', {
+    const response = await fetch(apiEndpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -30,9 +30,11 @@ ForgeCode is an AI coding assistant with a live React preview and a plain PHP pa
 
 ## Architecture decisions
 
-- The hosted version keeps the provider key server-side in `infinityfree/config.php`; browser code only calls `api/chat.php`.
+- The recommended free InfinityFree deployment serves the frontend from `infinityfree/` and calls the published Replit API server through `infinityfree/assets/config.js`; the provider key stays in Replit Secrets.
+- The PHP `api/chat.php` endpoint remains available as a fallback for cURL-enabled hosting, but InfinityFree free hosting blocks PHP cURL.
 - The Replit preview and PHP package share the same request and response shape.
 - Without a configured provider key, the preview returns a labeled demo response so the UI remains usable during setup.
+- The API server supports OpenAI-compatible providers through `OPENAI_API_URL` and `OPENAI_MODEL`; the current configured provider is Groq.
 
 ## Product
 

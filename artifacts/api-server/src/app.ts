@@ -6,6 +6,11 @@ import { logger } from "./lib/logger";
 
 const app: Express = express();
 
+const configuredCorsOrigins = process.env.CORS_ORIGIN
+  ?.split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 app.use(
   pinoHttp({
     logger,
@@ -25,7 +30,13 @@ app.use(
     },
   }),
 );
-app.use(cors());
+app.use(
+  cors(
+    configuredCorsOrigins?.length
+      ? { origin: configuredCorsOrigins }
+      : undefined,
+  ),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

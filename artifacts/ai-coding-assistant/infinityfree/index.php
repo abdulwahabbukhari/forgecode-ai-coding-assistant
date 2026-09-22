@@ -153,6 +153,7 @@ declare(strict_types=1);
             </div>
         </div>
     </div>
+    <script src="assets/config.js" defer></script>
     <script src="assets/app.js" defer></script>
 </body>
 </html>
