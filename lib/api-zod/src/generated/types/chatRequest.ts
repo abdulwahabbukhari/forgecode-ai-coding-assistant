@@ -23,4 +23,15 @@ export interface ChatRequest {
      * @nullable
      */
   language?: string | null;
+  mode?: 'chat' | 'image';
+  pdfText?: string | null;
+  projectFiles?: Array<{
+    path: string;
+    content: string;
+  }>;
+  attachments?: Array<{
+    name: string;
+    type: string;
+    data: string;
+  }>;
 }

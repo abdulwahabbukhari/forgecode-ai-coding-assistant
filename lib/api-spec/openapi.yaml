@@ -31,7 +31,7 @@ paths:
       operationId: sendChatMessage
       tags: [assistant]
       summary: Send a coding question to the AI assistant
-      description: Sends a conversation and optional code context to an AI coding assistant.
+      description: Sends a conversation, project context or multimodal attachment to WAHAB AI.
       requestBody:
         required: true
         content:
@@ -93,6 +93,41 @@ components:
         language:
           type: ["string", "null"]
           maxLength: 40
+        mode:
+          type: string
+          enum: [chat, image]
+        pdfText:
+          type: ["string", "null"]
+          maxLength: 60000
+        projectFiles:
+          type: array
+          maxItems: 80
+          items:
+            type: object
+            properties:
+              path:
+                type: string
+                maxLength: 240
+              content:
+                type: string
+                maxLength: 18000
+            required: [path, content]
+        attachments:
+          type: array
+          maxItems: 3
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                maxLength: 240
+              type:
+                type: string
+                maxLength: 100
+              data:
+                type: string
+                maxLength: 8000000
+            required: [name, type, data]
       required:
         - messages
     ChatResponse:

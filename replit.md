@@ -1,16 +1,21 @@
-# ForgeCode
+# WAHAB AI Version 2
 
-ForgeCode is an AI coding assistant with a live React preview and a plain PHP package prepared for InfinityFree hosting.
+WAHAB AI Version 2 is an AI coding assistant with a live React preview and a
+plain PHP package prepared for InfinityFree hosting. It is developed and owned
+by Syed Abdul Wahab Bukhari.
 
 ## Run & Operate
 
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm --filter @workspace/ai-coding-assistant run dev` — run the ForgeCode preview
+- `pnpm --filter @workspace/ai-coding-assistant run dev` — run the WAHAB AI preview
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
 - Required env: `DATABASE_URL` — Postgres connection string
+- AI env: `OPENAI_API_KEY` — provider key for real chat responses
+- Optional AI env: `OPENAI_API_URL`, `OPENAI_MODEL`, `OPENAI_IMAGE_API_URL`, and
+  `OPENAI_IMAGE_MODEL` for OpenAI-compatible providers
 
 ## Stack
 
@@ -33,12 +38,12 @@ ForgeCode is an AI coding assistant with a live React preview and a plain PHP pa
 - The recommended free InfinityFree deployment serves the frontend from `infinityfree/` and calls the published Replit API server through `infinityfree/assets/config.js`; the provider key stays in Replit Secrets.
 - The PHP `api/chat.php` endpoint remains available as a fallback for cURL-enabled hosting, but InfinityFree free hosting blocks PHP cURL.
 - The Replit preview and PHP package share the same request and response shape.
-- Without a configured provider key, the preview returns a labeled demo response so the UI remains usable during setup.
+- Without a configured provider key, the preview returns a clear setup error instead of a fake response.
 - The API server supports OpenAI-compatible providers through `OPENAI_API_URL` and `OPENAI_MODEL`; the current configured provider is Groq.
 
 ## Product
 
-- Responsive AI coding workspace for writing, explaining, debugging, and improving code.
+- Responsive WAHAB AI coding workspace for writing, explaining, debugging, and improving code.
 - Copyable fenced code blocks, starter prompts, code context, language selection, new conversation reset, and help surface.
 - InfinityFree-ready PHP endpoint using cURL and an OpenAI-compatible chat completions API.
 

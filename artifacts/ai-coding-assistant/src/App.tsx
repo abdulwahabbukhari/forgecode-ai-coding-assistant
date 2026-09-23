@@ -87,7 +87,7 @@ const welcomeMessage: ConversationMessage = {
   role: 'assistant',
   content:
     'I am ready when you are. Ask a question, paste a failing snippet, or bring a rough idea — I will help turn it into code you can ship.',
-  model: 'forge-ready',
+  model: 'wahab-ready',
 };
 
 function createId(prefix: string) {
@@ -255,7 +255,7 @@ function Home() {
           const errorResponse = error as { error?: string };
           setLocalError(
             errorResponse.error ||
-              'The forge could not complete that request. Try again in a moment.',
+              'WAHAB AI could not complete that request. Check the API settings and try again.',
           );
         },
       },
@@ -273,8 +273,8 @@ function Home() {
             <Code2 size={17} strokeWidth={2.5} />
           </div>
           <div>
-            <div className="forge-brand-name">ForgeCode</div>
-            <div className="forge-brand-sub">pair programming, sharpened</div>
+            <div className="forge-brand-name">WAHAB AI</div>
+            <div className="forge-brand-sub">version 2 · coding studio</div>
           </div>
           {mobileOpen && (
             <button
@@ -318,10 +318,10 @@ function Home() {
               className={`forge-status-dot ${healthIsOnline ? '' : 'offline'}`}
             />
             {health.isLoading
-              ? 'Checking forge status'
+              ? 'Checking WAHAB AI status'
               : healthIsOnline
-                ? 'Forge services online'
-                : 'Forge services unavailable'}
+                ? 'WAHAB AI services online'
+                : 'WAHAB AI services unavailable'}
           </div>
           <div className="forge-health-meta">API · local workspace</div>
         </div>
@@ -380,7 +380,7 @@ function Home() {
         <main className="forge-main">
           <div className="forge-intro">
             <div>
-              <p className="forge-eyebrow">Focused coding assistance</p>
+              <p className="forge-eyebrow">WAHAB AI · focused coding assistance</p>
               <h1 className="forge-title">
                 Turn rough questions into <em>shippable code.</em>
               </h1>
@@ -411,8 +411,8 @@ function Home() {
                       {message.role === 'user'
                         ? 'Your question'
                         : message.model
-                          ? `ForgeCode · ${message.model}`
-                          : 'ForgeCode'}
+                          ? `WAHAB AI · ${message.model}`
+                          : 'WAHAB AI'}
                     </div>
                     <div className="forge-message-bubble">
                       <MessageContent
@@ -435,7 +435,7 @@ function Home() {
                           )}
                           {copiedId === message.id ? 'Copied' : 'Copy response'}
                         </button>
-                        {message.demo && <span>Demo response</span>}
+                        {!message.demo && <span>Ready for review</span>}
                       </div>
                     )}
                   </div>
@@ -449,7 +449,7 @@ function Home() {
                     <i />
                     <i />
                   </span>
-                  ForgeCode is reasoning through the context…
+                  WAHAB AI is reasoning through the context…
                 </div>
               )}
 
@@ -509,7 +509,7 @@ function Home() {
                       submitPrompt();
                     }
                   }}
-                  placeholder="Ask ForgeCode anything about your code…"
+                  placeholder="Ask WAHAB AI anything about your code…"
                   ref={promptRef}
                   value={prompt}
                 />
@@ -590,7 +590,7 @@ function Home() {
               <h2 className="forge-side-heading">A better first pass</h2>
               <div className="forge-side-card">
                 <Sparkles size={16} color="#ef795f" />
-                <h3>Give the forge a job</h3>
+                <h3>Give WAHAB AI a clear job</h3>
                 <p>
                   The sharper the intent, the more useful the first answer. Say
                   what you expected, not just what broke.
@@ -609,7 +609,7 @@ function Home() {
               </div>
               <div className="forge-side-card">
                 <BookOpen size={16} color="#367f82" />
-                <h3>Context is a force multiplier</h3>
+                  <h3>Context is a force multiplier</h3>
                 <p>
                   Paste the smallest useful slice of code. Add the language so
                   suggestions stay idiomatic.
@@ -617,7 +617,7 @@ function Home() {
               </div>
               <div className="forge-side-card">
                 <Activity size={16} color="#367f82" />
-                <h3>Built for the loop</h3>
+                  <h3>Built for the loop</h3>
                 <p>
                   Ask, inspect, refine. Keep the conversation narrow and the
                   changes easy to review.

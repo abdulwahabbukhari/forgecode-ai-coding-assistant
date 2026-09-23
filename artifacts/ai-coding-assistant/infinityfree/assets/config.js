@@ -1,10 +1,11 @@
 /*
- * Public frontend configuration.
+ * WAHAB AI public frontend configuration.
  *
- * For free InfinityFree hosting, replace the placeholder below with the
- * published Replit API URL ending in /api/chat. Do not put an API key here.
+ * Leave this empty when uploading the complete InfinityFree package. The
+ * browser will then use the local PHP endpoint at api/chat.php.
  *
- * Example:
- * window.FORGE_CODE_API_URL = 'https://your-api-server.replit.app/api/chat';
+ * If the React/API server is hosted separately, set this to its full chat
+ * endpoint, for example: https://your-api.example.com/api/chat
+ * Never put an API key in this file.
  */
-window.FORGE_CODE_API_URL = 'PASTE_REPLIT_API_URL_HERE/api/chat';
+window.WAHAB_AI_API_URL = '';

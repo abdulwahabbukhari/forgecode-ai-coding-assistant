@@ -1,88 +1,100 @@
-# ForgeCode — AI Coding Assistant
+# WAHAB AI Version 2
 
-ForgeCode is a complete PHP, HTML, CSS, and JavaScript AI coding assistant prepared for shared hosting such as InfinityFree.
+WAHAB AI Version 2 is a complete PHP, HTML, CSS and JavaScript AI coding
+workspace created and owned by **Syed Abdul Wahab Bukhari**. It is designed to
+run from a normal InfinityFree `htdocs` folder without Node.js, Composer or a
+database.
 
-## InfinityFree setup
+## Upload to InfinityFree
 
-There are two hosting modes:
-
-- **Free InfinityFree:** host the frontend on InfinityFree and use the Replit API
-  server for AI requests. This is the recommended setup because InfinityFree
-  free hosting blocks PHP cURL.
-- **cURL-enabled hosting:** upload the complete `infinityfree` folder and use
-  its PHP endpoint directly.
-
-### Recommended free InfinityFree + Replit API setup
-
-1. Publish the **API Server** artifact on Replit. Its public URL must be
-   reachable from the internet.
-2. Add the secret `OPENAI_API_KEY` to the Replit API Server environment. Add it
-   through Replit Secrets; never paste it into this repository or into a
-   browser file.
-   The API accepts OpenAI-compatible providers. For a Groq key, use:
+1. Download or copy the complete `infinityfree` folder from this repository.
+2. Upload the **contents** of that folder into your InfinityFree website's
+   `htdocs` directory. The uploaded root must contain:
 
    ```text
-   OPENAI_API_URL=https://api.groq.com/openai/v1/chat/completions
-   OPENAI_MODEL=openai/gpt-oss-20b
+   index.php
+   config.php
+   .htaccess
+   api/chat.php
+   assets/app.js
+   assets/config.js
+   assets/styles.css
    ```
 
-   The `OPENAI_API_KEY` variable name is kept for compatibility with both
-   OpenAI and OpenAI-compatible providers.
-3. If you want to restrict browser access, set the Replit environment variable
-   `CORS_ORIGIN` to your InfinityFree domain, for example:
-   `https://your-site.epizy.com`. Leave it unset while testing if you do not
-   know the final domain yet.
-4. Open `infinityfree/assets/config.js` and replace:
-
-   ```js
-   window.FORGE_CODE_API_URL = 'PASTE_REPLIT_API_URL_HERE/api/chat';
-   ```
-
-   with your published API URL, for example:
-
-   ```js
-   window.FORGE_CODE_API_URL = 'https://your-api-server.replit.app/api/chat';
-   ```
-
-5. Upload the **contents** of the `infinityfree` folder into the correct
-   InfinityFree `htdocs` folder. The uploaded root should contain `index.php`,
-   `api`, `assets`, `config.php`, and `.htaccess`.
-6. Visit your InfinityFree domain. The browser will call the Replit API
-   directly; the OpenAI key stays on Replit.
-
-For this recommended mode, do **not** put an OpenAI key in `assets/config.js`
-or `assets/app.js`. The `api/chat.php` file remains as a fallback for a
-cURL-enabled PHP host, but it is not used when `assets/config.js` contains the
-published Replit API URL.
-
-### cURL-enabled hosting setup
-
-1. Open `infinityfree/config.php` in a text editor.
-2. Replace:
+3. Open `config.php` in a text editor and replace the placeholder value:
 
    ```php
    'api_key' => 'YOUR_API_KEY_HERE',
    ```
 
-   with your real OpenAI API key. Keep the quotes around the key.
-3. If you use a compatible provider, change `api_url` and `model` in the same file.
-4. Leave `assets/config.js` pointing to the placeholder so the browser falls
-   back to `api/chat.php`.
-5. Upload the **contents** of the `infinityfree` folder into your hosting
-   `htdocs` folder. The uploaded root should contain `index.php`, an `api`
-   folder, an `assets` folder, `config.php`, and `.htaccess`.
-6. Visit your domain. The chat sends requests to `api/chat.php`, which keeps
-   the API key on the server.
+   with your real provider key. The exact variable is `api_key` in
+   `infinityfree/config.php`.
+4. If needed, change the provider endpoint and model in the same file:
 
-The server needs PHP with cURL enabled. No database, Composer install, Node.js, or build step is required.
+   ```php
+   'api_url' => 'https://api.openai.com/v1/chat/completions',
+   'model' => 'gpt-4o-mini',
+   ```
 
-## Local preview
+5. Open your domain. The PHP endpoint keeps the key on the server and the
+   browser talks to `api/chat.php`.
 
-The Replit preview is the React version in `src/`. It uses the shared `/api/chat` endpoint. Without an environment key it returns a clearly labeled preview response, so the interface can be explored without configuration.
+### Important InfinityFree note
 
-## Security notes
+The direct PHP mode needs PHP cURL enabled by the host. If your InfinityFree
+plan blocks outbound PHP cURL, publish the repository's API Server separately
+and set this value in `assets/config.js`:
 
-- Never put the API key in `assets/config.js`, `assets/app.js`, or any other browser-side file.
-- Do not publish a real key in a public repository.
-- If you accidentally expose a key, revoke it at the provider immediately and create a new one.
-- The included `.htaccess` disables directory listing and blocks direct access to common configuration files.
+```js
+window.WAHAB_AI_API_URL = 'https://your-api-server.example.com/api/chat';
+```
+
+In that mode, keep the API key in server-side environment secrets instead of
+any browser file.
+
+## What works
+
+- Professional WAHAB AI chat for writing, explaining, debugging, fixing and
+  improving code.
+- Markdown code blocks with Copy code and Download buttons.
+- Multiple text files and folders as project context.
+- ZIP upload with in-browser file extraction and complete ZIP download.
+- PDF text extraction and analysis through PDF.js.
+- Image analysis through vision-capable OpenAI-compatible chat models.
+- Image generation through the configured `image_api_url` and `image_model`.
+- HTML/CSS/JavaScript live preview inside a sandboxed iframe.
+- Mobile and desktop responsive layout.
+- No fake/demo response: a missing key produces an actionable setup error.
+
+## API key safety
+
+Never commit a real key to this public repository. Before creating a ZIP to
+share, restore the value to exactly:
+
+```text
+YOUR_API_KEY_HERE
+```
+
+The public frontend configuration file never contains an API key.
+
+## React preview
+
+The `src/` application is the development preview and uses the shared API
+server. Run it from the repository root with:
+
+```bash
+pnpm install
+pnpm --filter @workspace/ai-coding-assistant run dev
+```
+
+For production checks:
+
+```bash
+pnpm run typecheck
+pnpm run build
+```
+
+## Owner
+
+**WAHAB AI Version 2**
+Developed and owned by **Syed Abdul Wahab Bukhari**

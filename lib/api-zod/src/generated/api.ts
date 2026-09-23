@@ -27,6 +27,10 @@ export const sendChatMessageBodyMessagesMax = 30;
 export const sendChatMessageBodyCodeMax = 20000;
 
 export const sendChatMessageBodyLanguageMax = 40;
+export const sendChatMessageBodyPdfTextMax = 60000;
+export const sendChatMessageBodyProjectFileContentMax = 18000;
+export const sendChatMessageBodyProjectFilePathMax = 240;
+export const sendChatMessageBodyAttachmentDataMax = 8000000;
 
 
 
@@ -37,6 +41,17 @@ export const SendChatMessageBody = zod.object({
 })).min(1).max(sendChatMessageBodyMessagesMax),
   "code": zod.string().max(sendChatMessageBodyCodeMax).nullish(),
   "language": zod.string().max(sendChatMessageBodyLanguageMax).nullish()
+  ,"mode": zod.enum(['chat', 'image']).optional()
+  ,"pdfText": zod.string().max(sendChatMessageBodyPdfTextMax).nullish()
+  ,"projectFiles": zod.array(zod.object({
+    "path": zod.string().max(sendChatMessageBodyProjectFilePathMax),
+    "content": zod.string().max(sendChatMessageBodyProjectFileContentMax)
+  })).max(80).optional()
+  ,"attachments": zod.array(zod.object({
+    "name": zod.string().max(240),
+    "type": zod.string().max(100),
+    "data": zod.string().max(sendChatMessageBodyAttachmentDataMax)
+  })).max(3).optional()
 })
 
 export const SendChatMessageResponse = zod.object({
